@@ -14,7 +14,13 @@ model Issue{
   id Int @id @default(autoincrement())
   title String @db.VarChar(255)
   description String @db.Text
-  status Boolean @default(true)
+  status status @default(Open)
   created DateTime @default(now())
   updated DateTime @updatedAt
+}
+
+enum status {
+  Open
+  Closed
+  In_Progress
 }

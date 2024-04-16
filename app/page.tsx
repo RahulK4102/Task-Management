@@ -14,7 +14,7 @@ export default async function Home() {
     <div >
       <div className="w-full mx-auto py-2 flex justify-center items-center pr-40 mt-28">
         <ul className="flex gap-6 " >
-        {todo.filter(todoItem => !todoItem.status).map(todoItem => (
+        {todo.filter(todoItem => todoItem.status === "In_Progress").map(todoItem => (
           <ToDoItems key={todoItem.id} {...todoItem} />
         ))}
         </ul>

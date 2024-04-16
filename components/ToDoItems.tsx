@@ -15,10 +15,12 @@ type TodoItemsProps={
     description: string
     status: Status
     complete?: boolean
+    created :Date
+    updated :Date
 }
 
 
-const ToDoItems = ({ id, title, description, status, complete }: TodoItemsProps) => {
+const ToDoItems = ({ id, title, description, status, complete,created,updated }: TodoItemsProps) => {
   const [isAccepted, setIsAccepted] = useState(true);
   const router = useRouter();
   // const handleAccept = async () => {
@@ -57,16 +59,18 @@ const ToDoItems = ({ id, title, description, status, complete }: TodoItemsProps)
   };
 
   return (
-    <div className="bg-white rounded-md shadow-md p-4 mb-4 w-52 h-52">
+    <div className={`bg-white rounded-md shadow-md p-4 mb-4 ${status === 'Closed' ? '' : 'w-52 h-52'}`}>
       <div className="flex flex-col">
         <label htmlFor={id} className="cursor-pointer text-lg font-bold mb-2">
           {title}
         </label>
         <p className="text-gray-700">{description}</p>
-        <p className="text-gray-600 mt-2">Status: {status ? "Open":"In_Progress"}</p>
+        <p className="text-gray-600 mt-2">Status: {status}</p>
+        {status === 'Closed' && <p className="text-gray-600 mt-2">CreatedAt: {created.toString()} </p>}
+        {status === 'Closed' && <p className="text-gray-600 mt-2">UpdatedAt: {updated.toString()} </p>}
         <div className="flex">
-          <Button onClick={handleAccept} >Accept</Button>
-          <Button color="red" onClick={handleClose} >Close</Button>
+          {status === 'Open' && <Button onClick={handleAccept} >Accept</Button>}
+          {status === 'In_Progress' && <Button color="red" onClick={handleAccept}>Close</Button>}
         </div>
       </div>
     </div>

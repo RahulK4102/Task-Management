@@ -10,7 +10,7 @@ function Navbar ({ className }: { className?: string }) {
   return (
     <div className={cn("fixed top-10 inset-x-0 max-w-2xl mx-auto z-50", className)} >
       <Menu setActive={setActive} >
-        <Link className=" absolute left-[3.75rem] top-[17px] " href={"/"} >
+        <Link className=" absolute left-[3.75rem] top-[17px] " href={"/History"} >
           <Image src="/bug.svg"
             alt=""  width={35}
             height={35}/>
