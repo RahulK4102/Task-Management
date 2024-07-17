@@ -3,6 +3,7 @@ import { Button, TextField,Callout,Text } from "@radix-ui/themes";
 import dynamic from 'next/dynamic'
 import "easymde/dist/easymde.min.css";
 import { useForm, Controller } from "react-hook-form";
+import Navbar from "@/components/Navbar";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -15,23 +16,25 @@ import Spinner from "@/app/components/Spinner";
 type IssueForm = z.infer<typeof createIssueSchema>;
 
 
-const NewIssue = () => {
+const NewIssue = ({ params }: { params: { id: string } }) => {
+  const {id} = params;
   const SimpleMDE = dynamic(() => import('react-simplemde-editor'), { ssr: false })
   const router = useRouter();
   const { register, control, handleSubmit, formState:{errors} } = useForm<IssueForm>({resolver: zodResolver(createIssueSchema)});
   const [error,setError] = useState('');
   const [isSubmitting,setSubmitting] = useState(false);
   return (
-  <div className="max-w-xl mt-32 ml-12" >
+  <div className="mt-24" >
+    <Navbar  id="1" />
     {error && <Callout.Root color="red" className="mb-5" >
       <Callout.Text>{error}</Callout.Text>
       </Callout.Root>}
     <form
-      className="  space-y-3"
+      className="space-y-3 ml-40 mr-40"
       onSubmit={handleSubmit(async (data) => {
         try {
           await axios.post("/api/issues", data);
-          router.push("/Issues");
+          router.push("/Issues/1");
           setSubmitting(true);
         } catch (error) {
           setError('An unexpected error occurred');

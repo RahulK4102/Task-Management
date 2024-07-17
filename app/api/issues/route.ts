@@ -16,7 +16,7 @@ export async function POST(request:NextRequest){
     if(!validation.success)
         return NextResponse.json(validation.error.errors,{status: 400});
     const newIssue = await prisma.issue.create({
-        data:{title: body.title, description: body.description}
+        data:{title: body.title, description: body.description,createdById: 1}
     })
     return NextResponse.json(newIssue,{status:201});
 }
@@ -70,7 +70,7 @@ export async function DELETE(request: NextRequest) {
 export async function PUT(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;
     const id = searchParams.get('id');
-
+    const ProfileID = searchParams.get('profile');
     try {
         // Retrieve the issue from the database
         const issueToUpdate = await prisma.issue.findUnique({

@@ -10,13 +10,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Issue{
-  id Int @id @default(autoincrement())
-  title String @db.VarChar(255)
-  description String @db.Text
-  status status @default(Open)
-  created DateTime @default(now())
-  updated DateTime @updatedAt
+model Issue {
+  id          Int      @id @default(autoincrement())
+  title       String   @db.VarChar(255)
+  description String   @db.Text
+  status      status   @default(Open)
+  created     DateTime @default(now())
+  updated     DateTime @updatedAt
+  createdBy   User     @relation(fields: [createdById], references: [id])
+  createdById Int
+}
+
+model User {
+  id    Int     @id @default(autoincrement())
+  name  String
+  email String  @unique
+  password String  @unique
+  issues Issue[]
 }
 
 enum status {
